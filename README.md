@@ -24,11 +24,22 @@ podman tag flask-app:latest docker.io/barnbarn96/predik-epl:latest
 podman push docker.io/barnbarn96/predik-epl:latest
 
 
+```
+### 2. Apply Kubernetes Deployment
 
-# Apply the Kubernetes deployment file (e.g., kubernetes.yaml)
+```bash
+## Apply the Kubernetes deployment file (e.g., kubernetes.yaml)
 kubectl apply -f kubernetes.yaml
+```
 
-
+### 3. Port-Forward to Access the Flask Application
+```bash
+### Get the pod name of the Flask app:
 $podName = kubectl get pods --no-headers | Select-String "flask" | ForEach-Object { $_.Line.Split(' ')[0] }
 
+### Port-forward the pod to access the Flask app locally:
 kubectl port-forward pod/$podName 8080:8080
+
+### After running this command, you should be able to access the Flask application at http://localhost:8080.
+
+
